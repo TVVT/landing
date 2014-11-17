@@ -17,9 +17,9 @@ class ViewController: UIViewController {
     
     // If we find a device we'll store it here for later use
     var captureDevice : AVCaptureDevice?
-    
-    
-    
+    var input : AVCaptureInput?
+
+
     
 
     override func viewDidLoad() {
@@ -35,6 +35,10 @@ class ViewController: UIViewController {
                 // Finally check the position and confirm we've got the back camera
                 if(device.position == AVCaptureDevicePosition.Back) {
                     captureDevice = device as? AVCaptureDevice
+                    input = AVCaptureDeviceInput(device: device as AVCaptureDevice, error: nil)
+                    
+                    
+                    
                 }
             }
         }
@@ -89,6 +93,14 @@ class ViewController: UIViewController {
             device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, ISO: minISO, completionHandler: { (time) -> Void in
                 //
             })
+            println(device.maxWhiteBalanceGain);
+
+        
+            
+            //find out at http://digital-lighting.150m.com/ch08lev1sec3.html
+            
+
+            device.setWhiteBalanceModeLockedWithDeviceWhiteBalanceGains(AVCaptureWhiteBalanceGains(redGain: 2.2,greenGain: 1.0,blueGain: 1.7), completionHandler: nil)
             
             
 //            device.setExposureModeCustomWithDuration(CMTime(value: 1, timescale: 2, flags: CMTimeFlags.allZeros, epoch: CMTimeEpoch.allZeros), ISO: 100 , completionHandler: nil )
@@ -119,6 +131,13 @@ class ViewController: UIViewController {
     }
     
     
+    
+    
+    func takePhoto(){
+    
+    
+    
+    }
     
     
     
