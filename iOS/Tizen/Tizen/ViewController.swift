@@ -15,16 +15,16 @@ class ViewController: UIViewController {
     let captureSession = AVCaptureSession()
     
     
-    @IBAction func photoBtn(sender: AnyObject) {
-        
-        takePhoto()
-        
-    }
+//    @IBAction func photoBtn(sender: AnyObject) {
+//        
+//        takePhoto()
+//        
+//    }
     // If we find a device we'll store it here for later use
     var captureDevice : AVCaptureDevice?
-    
-    
-    
+    var input : AVCaptureInput?
+
+
     
 
     override func viewDidLoad() {
@@ -40,6 +40,12 @@ class ViewController: UIViewController {
                 // Finally check the position and confirm we've got the back camera
                 if(device.position == AVCaptureDevicePosition.Back) {
                     captureDevice = device as? AVCaptureDevice
+                    input = AVCaptureDeviceInput(device: device as AVCaptureDevice, error: nil)
+                    
+                    
+                    
+                    
+                    
                 }
             }
         }
@@ -89,15 +95,20 @@ class ViewController: UIViewController {
             device.focusMode = AVCaptureFocusMode.Locked
             device.whiteBalanceMode = AVCaptureWhiteBalanceMode.Locked
             
+            focusTo(Float(0.5))
+            
             let minISO = device.activeFormat.minISO
             
-            device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, ISO: 200, completionHandler: { (time) -> Void in
+            device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, ISO: minISO, completionHandler: { (time) -> Void in
                 //
             })
+//            println(device.maxWhiteBalanceGain);
             
             
-//            device.setExposureModeCustomWithDuration(CMTime(value: 1, timescale: 2, flags: CMTimeFlags.allZeros, epoch: CMTimeEpoch.allZeros), ISO: 100 , completionHandler: nil )
+            //find out at http://digital-lighting.150m.com/ch08lev1sec3.html
             
+
+            device.setWhiteBalanceModeLockedWithDeviceWhiteBalanceGains(AVCaptureWhiteBalanceGains(redGain: 2.75,greenGain: 1.4,blueGain: 2.7), completionHandler: nil)
             
             println(device.ISO);
             
@@ -123,9 +134,11 @@ class ViewController: UIViewController {
         
         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         self.view.layer.addSublayer(previewLayer)
-        previewLayer?.frame = CGRect(x: 0, y: 0, width: self.view.layer.frame.width, height: self.view.layer.frame.height*2/3)
+        previewLayer?.frame = CGRect(x: 0, y: 0, width: self.view.layer.frame.width, height: self.view.layer.frame.height)
         captureSession.startRunning()
         
+        var timer = NSTimer.scheduledTimerWithTimeInterval(0.32, target: self, selector: Selector("takePhoto"), userInfo: nil, repeats: true)
+
     }
     
     
@@ -150,6 +163,10 @@ class ViewController: UIViewController {
     func handler(buffer:CMSampleBufferRef,error:NSError){
         
     }
+    
+
+    
+    
     
 
     
