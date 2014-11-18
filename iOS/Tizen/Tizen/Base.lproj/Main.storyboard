@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dra-oB-BvV">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dra-oB-BvV">
                                 <rect key="frame" x="16" y="550" width="41" height="30"/>
                                 <state key="normal" title="Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -31,16 +31,78 @@
                                 <state key="normal" title="Setting">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="setParams:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="fGg-9z-sH7"/>
+                                </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Io1-ma-Rvw">
+                                <rect key="frame" x="150" y="412" width="300" height="120"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="yvU-cw-5JY">
+                                        <rect key="frame" x="45" y="8" width="242" height="31"/>
+                                        <connections>
+                                            <action selector="rSetter:" destination="vXZ-lx-hvc" eventType="valueChanged" id="KXT-0J-EzW"/>
+                                        </connections>
+                                    </slider>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7rm-bs-iJA">
+                                        <rect key="frame" x="45" y="82" width="242" height="31"/>
+                                        <connections>
+                                            <action selector="bSetter:" destination="vXZ-lx-hvc" eventType="valueChanged" id="Khn-70-d40"/>
+                                        </connections>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kqa-Oo-pO0">
+                                        <rect key="frame" x="3" y="12" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iky-Mf-6RK">
+                                        <rect key="frame" x="3" y="49" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tyi-mc-ETn">
+                                        <rect key="frame" x="3" y="86" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="L6k-LH-dOp">
+                                        <rect key="frame" x="45" y="46" width="242" height="31"/>
+                                        <connections>
+                                            <action selector="gSetter:" destination="vXZ-lx-hvc" eventType="valueChanged" id="lAK-gl-HQ4"/>
+                                            <action selector="rSetter:" destination="vXZ-lx-hvc" eventType="valueChanged" id="k29-zL-OJc"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                                <color key="backgroundColor" red="0.78173925349999995" green="1" blue="0.95825745200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="Vc1-G4-hS6"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Io1-ma-Rvw" secondAttribute="centerX" id="2yV-oC-e3g"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="86E-Xu-W8p" secondAttribute="bottom" constant="20" id="Eio-ZM-iSv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="86E-Xu-W8p" secondAttribute="trailing" constant="20" id="V9v-2f-H06"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Dra-oB-BvV" secondAttribute="bottom" constant="20" id="bqE-Ji-Za5"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Io1-ma-Rvw" secondAttribute="bottom" constant="60" id="fSS-ea-geQ"/>
                             <constraint firstItem="Dra-oB-BvV" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="20" id="qYd-DY-dZW"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="bLabel" destination="tyi-mc-ETn" id="cxZ-A6-FDo"/>
+                        <outlet property="bSlider" destination="7rm-bs-iJA" id="nYX-uX-nSS"/>
+                        <outlet property="gLabel" destination="Iky-Mf-6RK" id="0j8-7C-OZA"/>
+                        <outlet property="gSlider" destination="L6k-LH-dOp" id="aoK-mZ-1KC"/>
+                        <outlet property="photoButton" destination="Dra-oB-BvV" id="U2i-u2-oeS"/>
+                        <outlet property="rLabel" destination="kqa-Oo-pO0" id="fWM-di-tej"/>
+                        <outlet property="rSlider" destination="yvU-cw-5JY" id="sEt-wp-Ybg"/>
+                        <outlet property="settingButton" destination="86E-Xu-W8p" id="L34-LM-xov"/>
+                        <outlet property="settingView" destination="Io1-ma-Rvw" id="nES-9v-OBu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

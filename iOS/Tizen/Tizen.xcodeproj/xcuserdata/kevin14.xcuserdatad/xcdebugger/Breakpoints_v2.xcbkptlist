@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tizen/ViewController.swift"
-            timestampString = "437908775.087071"
+            timestampString = "437988299.406403"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "takePhoto()"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "beginSession()"
             landmarkType = "5">
             <Locations>
                <Location
@@ -98,13 +98,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tizen/ViewController.swift"
-            timestampString = "437909393.631543"
+            timestampString = "437988299.406403"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "takePhoto()"
-            landmarkType = "5">
+            startingLineNumber = "212"
+            endingLineNumber = "212"
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
