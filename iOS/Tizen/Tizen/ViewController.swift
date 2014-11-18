@@ -15,6 +15,11 @@ class ViewController: UIViewController {
     let captureSession = AVCaptureSession()
     
     
+//    @IBAction func photoBtn(sender: AnyObject) {
+//        
+//        takePhoto()
+//        
+//    }
     // If we find a device we'll store it here for later use
     var captureDevice : AVCaptureDevice?
     var input : AVCaptureInput?
@@ -36,6 +41,8 @@ class ViewController: UIViewController {
                 if(device.position == AVCaptureDevicePosition.Back) {
                     captureDevice = device as? AVCaptureDevice
                     input = AVCaptureDeviceInput(device: device as AVCaptureDevice, error: nil)
+                    
+                    
                     
                     
                     
@@ -88,23 +95,20 @@ class ViewController: UIViewController {
             device.focusMode = AVCaptureFocusMode.Locked
             device.whiteBalanceMode = AVCaptureWhiteBalanceMode.Locked
             
+            focusTo(Float(0.5))
+            
             let minISO = device.activeFormat.minISO
             
             device.setExposureModeCustomWithDuration(AVCaptureExposureDurationCurrent, ISO: minISO, completionHandler: { (time) -> Void in
                 //
             })
-            println(device.maxWhiteBalanceGain);
-
-        
+//            println(device.maxWhiteBalanceGain);
+            
             
             //find out at http://digital-lighting.150m.com/ch08lev1sec3.html
             
 
-            device.setWhiteBalanceModeLockedWithDeviceWhiteBalanceGains(AVCaptureWhiteBalanceGains(redGain: 2.2,greenGain: 1.0,blueGain: 1.7), completionHandler: nil)
-            
-            
-//            device.setExposureModeCustomWithDuration(CMTime(value: 1, timescale: 2, flags: CMTimeFlags.allZeros, epoch: CMTimeEpoch.allZeros), ISO: 100 , completionHandler: nil )
-            
+            device.setWhiteBalanceModeLockedWithDeviceWhiteBalanceGains(AVCaptureWhiteBalanceGains(redGain: 2.75,greenGain: 1.4,blueGain: 2.7), completionHandler: nil)
             
             println(device.ISO);
             
@@ -119,6 +123,10 @@ class ViewController: UIViewController {
         
         var err : NSError? = nil
         captureSession.addInput(AVCaptureDeviceInput(device: captureDevice, error: &err))
+        //添加outputs
+        captureSession.addOutput(AVCaptureStillImageOutput())
+        
+        captureSession.sessionPreset = AVCaptureSessionPresetHigh
         
         if err != nil {
             println("error: \(err?.localizedDescription)")
@@ -126,70 +134,41 @@ class ViewController: UIViewController {
         
         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         self.view.layer.addSublayer(previewLayer)
-        previewLayer?.frame = self.view.layer.frame
+        previewLayer?.frame = CGRect(x: 0, y: 0, width: self.view.layer.frame.width, height: self.view.layer.frame.height)
         captureSession.startRunning()
+        
+        var timer = NSTimer.scheduledTimerWithTimeInterval(0.32, target: self, selector: Selector("takePhoto"), userInfo: nil, repeats: true)
+
     }
-    
-    
     
     
     func takePhoto(){
-    
-    
-    
+        let outPut:AVCaptureStillImageOutput = captureSession.outputs[0] as AVCaptureStillImageOutput
+        let inPut:AVCaptureInput = captureSession.inputs[0] as AVCaptureInput
+        println(outPut.connections.count)
+        var connection:AVCaptureConnection = outPut.connections[0] as AVCaptureConnection
+        outPut.captureStillImageAsynchronouslyFromConnection(connection, completionHandler:{
+            (buffer: CMSampleBuffer!,error:NSError!) in
+            let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(buffer)
+
+            let image:UIImage = UIImage(data: imageData)!
+            
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+            
+        })
+        
+        
     }
     
+    func handler(buffer:CMSampleBufferRef,error:NSError){
+        
+    }
+    
+
     
     
-//    
-//    func takePhoto(){
-//        
-//        
-//        if let stillOutput = self.stillImageOutput {
-//            // we do this on another thread so that we don't hang the UI
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-//                //find the video connection
-//                var videoConnection : AVCaptureConnection?
-//                for connecton in stillOutput.connections {
-//                    //find a matching input port
-//                    for port in connecton.inputPorts!{
-//                        if port.mediaType == AVMediaTypeVideo {
-//                            videoConnection = connecton as? AVCaptureConnection
-//                            break //for port
-//                        }
-//                    }
-//                    
-//                    if videoConnection  != nil {
-//                        break// for connections
-//                    }
-//                }
-//                if videoConnection  != nil {
-//                    stillOutput.captureStillImageAsynchronouslyFromConnection(videoConnection){
-//                        (imageSampleBuffer : CMSampleBuffer!, _) in
-//                        
-//                        let imageDataJpeg = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer)
-//                        var pickedImage: UIImage = UIImage(data: imageDataJpeg)!
-//                        
-//                        let scaledImage:UIImage = self.squareImageFromImage(pickedImage, newSize: 320.0)
-//                        //let scaledImage = self.imageWithImage(pickedImage, scaledToSize: CGSizeMake(320, 320))
-//                        
-//                        let imageData = UIImagePNGRepresentation(scaledImage)
-//                        var imageFile:PFFile = PFFile(data: imageData)
-//                        
-//                        var userPost = PFObject(className:"UserPost")
-//                        
-//                        userPost["imageFile"] = imageFile
-//                        userPost["from"] = PFUser.currentUser()
-//                        userPost.saveInBackground()
-//                        
-//                        
-//                    }
-//                    self.captureSession.stopRunning()
-//                }
-//            }
-//        }
-//        println("take photo pressed")
-//    }
+    
+
     
     
 
